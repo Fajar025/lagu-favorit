@@ -34,8 +34,9 @@ function formatNumber(num) {
   if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + "K";
   return num;
 }
+let activeCard = null;
 
-songs.forEach((song) => {
+songs.forEach((song, index) => {
   const card = document.createElement("div");
   card.className = "song-card";
   card.innerHTML = `
@@ -47,6 +48,27 @@ songs.forEach((song) => {
   card.addEventListener("click", () => {
     player.src = song.file;
     player.play();
+
+    if (activeCard) {
+      activeCard.classList.remove("active");
+    }
+    card.classList.add("active");
+    activeCard = card;
   });
   listEl.appendChild(card);
 });
+const toggleBtn = document.getElementById("theme-toggle");
+
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  // Ganti icon tombol
+  if (document.body.classList.contains("dark")) {
+    toggleBtn.textContent = "☀️ Ganti Mode";
+  } else {
+    toggleBtn.textContent = "🌙 Ganti Mode";
+  }
+});
+
+
+
